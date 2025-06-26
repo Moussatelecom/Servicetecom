@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TelecomAcademi - Formation en Développement</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a2530);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: var(--secondary);
+            font-size: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-4.0.3') no-repeat center/cover;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 10%;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero .btn {
+            font-size: 1.2rem;
+            padding: 0.8rem 2.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            color: var(--primary);
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .courses {
+            padding: 2rem 5%;
+        }
+
+        .course-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            background-color: white;
+            border: 2px solid var(--secondary);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .course-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .course-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .course-level {
+            background-color: var(--light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+
+        .course-price {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .course-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            overflow: hidden;
+            animation: modalAppear 0.4s;
+        }
+
+        @keyframes modalAppear {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .payment-method {
+            flex: 1;
+            text-align: center;
+            border: 2px solid #ddd;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-method:hover, .payment-method.active {
+            border-color: var(--secondary);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .payment-method i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .video-container {
+            display: none;
+            padding: 2rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-player {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background-color: #000;
+        }
+
+        .video-player iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-list {
+            margin-top: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-item {
+            padding: 1.2rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .video-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .video-item.active {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .video-item i {
+            margin-right: 1rem;
+            color: var(--secondary);
+        }
+
+        .video-title {
+            font-weight: 600;
+        }
+
+        .video-duration {
+            margin-left: auto;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 3rem 5%;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                margin: 1rem 0;
+                gap: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- En-tête -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-laptop-code"></i>
+            <h1>TelecomAcademi</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Accueil</a></li>
+                <li><a href="#">Formations</a></li>
+                <li><a href="#">Formateurs</a></li>
+                <li><a href="#">Entreprises</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <button class="btn btn-outline" id="loginBtn">Connexion</button>
+            <button class="btn btn-primary" id="registerBtn">Inscription</button>
+        </div>
+    </header>
+
+    <!-- Section Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Formez-vous aux métiers du numérique</h2>
+            <p>Développement Web, Mobile, Data Science, Intelligence Artificielle et bien plus encore</p>
+            <button class="btn btn-primary">Découvrir nos formations</button>
+        </div>
+    </section>
+
+    <!-- Catalogue de formations -->
+    <section class="courses">
+        <h2 class="section-title">Nos Formations Populaires</h2>
+        
+        <div class="course-filters">
+            <button class="filter-btn active">Toutes</button>
+            <button class="filter-btn">Développement Web</button>
+            <button class="filter-btn">Mobile</button>
+            <button class="filter-btn">Data Science</button>
+            <button class="filter-btn">Cybersécurité</button>
+        </div>
+        
+        <div class="course-grid">
+            <!-- Cours 1 -->
+            <div class="course-card">
+                <div class="course-image" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+                <div class="course-content">
+                    <h3>JavaScript Moderne</h3>
+                    <p>Maîtrisez JavaScript et ses frameworks (React, Vue, Angular) pour créer des applications web interactives.</p>
+                    <div class="course-info">
+                        <span class="course-level">Débutant</span>
+                        <span class="course-price">99€</span>
+                    </div>
+                    <div class="course-stats">
+                        <span><i class="fas fa-video"></i> 45 leçons</span>
+                        <span><i class="fas fa-clock"></i> 22 heures</span>
+                    </div>
+                    <button class="btn btn-primary btn-buy" data-course="JavaScript Moderne" data-price="99">Acheter maintenant</button>
+                </div>
+            </div>
+            
+            <!-- Cours 2 -->
+            <div class="course-card">
+                <div class="course-image" style="background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+                <div class="course-content">
+                    <h3>Python Avancé</h3>
+                    <p>Devenez expert en Python pour l'analyse de données, le machine learning et le développement backend.</p>
+                    <div class="course-info">
+                        <span class="course-level">Intermédiaire</span>
+                        <span class="course-price">129€</span>
+                    </div>
+                    <div class="course-stats">
+                        <span><i class="fas fa-video"></i> 62 leçons</span>
+                        <span><i class="fas fa-clock"></i> 35 heures</span>
+                    </div>
+                    <button class="btn btn-primary btn-buy" data-course="Python Avancé" data-price="129">Acheter maintenant</button>
+                </div>
+            </div>
+            
+            <!-- Cours 3 -->
+            <div class="course-card">
+                <div class="course-image" style="background-image: url('https://images.unsplash.com/photo-1618044733300-9472054094ee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80');"></div>
+                <div class="course-content">
+                    <h3>Développement iOS avec Swift</h3>
+                    <p>Créez des applications iOS natives avec Swift et SwiftUI. Publiez vos apps sur l'App Store.</p>
+                    <div class="course-info">
+                        <span class="course-level">Débutant</span>
+                        <span class="course-price">149€</span>
+                    </div>
+                    <div class="course-stats">
+                        <span><i class="fas fa-video"></i> 58 leçons</span>
+                        <span><i class="fas fa-clock"></i> 30 heures</span>
+                    </div>
+                    <button class="btn btn-primary btn-buy" data-course="Développement iOS avec Swift" data-price="149">Acheter maintenant</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal d'inscription -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Créer un compte</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" placeholder="Votre nom d'utilisateur">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="votre@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmer le mot de passe</label>
+                    <input type="password" id="confirmPassword" placeholder="••••••••">
+                </div>
+                <button class="btn btn-primary" style="width:100%;">S'inscrire</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de connexion -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Connexion</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="votre@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Mot de passe</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••">
+                </div>
+                <button class="btn btn-primary" style="width:100%;">Se connecter</button>
+                <p style="text-align:center; margin-top:1rem;">
+                    <a href="#" style="color:var(--secondary);">Mot de passe oublié ?</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de paiement -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Paiement</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Formation: <strong id="courseTitle"></strong></p>
+                <p>Prix: <strong id="coursePrice"></strong></p>
+                
+                <div class="form-group">
+                    <label for="cardName">Nom sur la carte</label>
+                    <input type="text" id="cardName" placeholder="Nom Prénom">
+                </div>
+                <div class="form-group">
+                    <label for="cardNumber">Numéro de carte</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                </div>
+                <div style="display:flex; gap:1rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label for="expiryDate">Date d'expiration</label>
+                        <input type="text" id="expiryDate" placeholder="MM/AA">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123">
+                    </div>
+                </div>
+                
+                <div class="payment-methods">
+                    <div class="payment-method active">
+                        <i class="fab fa-cc-visa"></i>
+                        <p>Carte de crédit</p>
+                    </div>
+                    <div class="payment-method">
+                        <i class="fab fa-paypal"></i>
+                        <p>PayPal</p>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="width:100%;" id="confirmPayment">Payer maintenant</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Vidéos (cachée par défaut) -->
+    <section class="video-container" id="videoSection">
+        <h2 class="section-title">Formation JavaScript Moderne</h2>
+        
+        <div class="video-player">
+            <iframe src="https://www.youtube.com/embed/hdI2bqOjy3c" allowfullscreen></iframe>
+        </div>
+        
+        <div class="video-list">
+            <div class="video-item active">
+                <i class="fas fa-play-circle"></i>
+                <div class="video-title">Introduction à JavaScript</div>
+                <div class="video-duration">12:45</div>
+            </div>
+            <div class="video-item">
+                <i class="fas fa-play-circle"></i>
+                <div class="video-title">Les bases de la syntaxe</div>
+                <div class="video-duration">18:30</div>
+            </div>
+            <div class="video-item">
+                <i class="fas fa-play-circle"></i>
+                <div class="video-title">Manipulation du DOM</div>
+                <div class="video-duration">22:15</div>
+            </div>
+            <div class="video-item">
+                <i class="fas fa-play-circle"></i>
+                <div class="video-title">Les fonctions en JS</div>
+                <div class="video-duration">25:40</div>
+            </div>
+            <div class="video-item">
+                <i class="fas fa-play-circle"></i>
+                <div class="video-title">ES6 et au-delà</div>
+                <div class="video-duration">20:10</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pied de page -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TelecomAcademi</h3>
+                <p>La plateforme de référence pour se former aux métiers du numérique. Des formations de qualité avec des experts du secteur.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Formations</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Développement Web</a></li>
+                    <li><a href="#">Développement Mobile</a></li>
+                    <li><a href="#">Data Science</a></li>
+                    <li><a href="#">Intelligence Artificielle</a></li>
+                    <li><a href="#">Cybersécurité</a></li>
+                    <li><a href="#">DevOps</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Liens Utiles</h3>
+                <ul class="footer-links">
+                    <li><a href="#">À propos de nous</a></li>
+                    <li><a href="#">Nos formateurs</a></li>
+                    <li><a href="#">Témoignages</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Politique de confidentialité</a></li>
+                    <li><a href="#">Conditions d'utilisation</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Avenue du Code, 75000 Bamako</p>
+                <p><i class="fas fa-phone"></i> +223 70 77 55 74</p>
+                <p><i class="fas fa-envelope"></i> telecomsmoussa@gmail.com</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 TelecomAcademi. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Gestion des modaux
+        const registerModal = document.getElementById('registerModal');
+        const loginModal = document.getElementById('loginModal');
+        const paymentModal = document.getElementById('paymentModal');
+        const registerBtn = document.getElementById('registerBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        const closeButtons = document.querySelectorAll('.close-modal');
+        const buyButtons = document.querySelectorAll('.btn-buy');
+        const videoSection = document.getElementById('videoSection');
+        const courseTitle = document.getElementById('courseTitle');
+        const coursePrice = document.getElementById('coursePrice');
+        const confirmPayment = document.getElementById('confirmPayment');
+        const videoItems = document.querySelectorAll('.video-item');
+        const paymentMethods = document.querySelectorAll('.payment-method');
+
+        // Ouvrir le modal d'inscription
+        registerBtn.addEventListener('click', () => {
+            registerModal.style.display = 'flex';
+        });
+
+        // Ouvrir le modal de connexion
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+
+        // Fermer les modaux
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                registerModal.style.display = 'none';
+                loginModal.style.display = 'none';
+                paymentModal.style.display = 'none';
+            });
+        });
+
+        // Fermer les modaux en cliquant en dehors
+        window.addEventListener('click', (e) => {
+            if (e.target === registerModal) registerModal.style.display = 'none';
+            if (e.target === loginModal) loginModal.style.display = 'none';
+            if (e.target === paymentModal) paymentModal.style.display = 'none';
+        });
+
+        // Gestion des achats
+        buyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const course = button.getAttribute('data-course');
+                const price = button.getAttribute('data-price');
+                
+                courseTitle.textContent = course;
+                coursePrice.textContent = price + '€';
+                paymentModal.style.display = 'flex';
+            });
+        });
+
+        // Confirmation de paiement
+        confirmPayment.addEventListener('click', () => {
+            alert('Paiement effectué avec succès ! Vous avez maintenant accès à la formation.');
+            paymentModal.style.display = 'none';
+            videoSection.style.display = 'block';
+            window.scrollTo({
+                top: videoSection.offsetTop,
+                behavior: 'smooth'
+            });
+        });
+
+        // Sélection des méthodes de paiement
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', () => {
+                paymentMethods.forEach(m => m.classList.remove('active'));
+                method.classList.add('active');
+            });
+        });
+
+        // Gestion des vidéos
+        videoItems.forEach(item => {
+            item.addEventListener('click', () => {
+                videoItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Dans une application réelle, on chargerait la vidéo correspondante
+                const videoTitle = item.querySelector('.video-title').textContent;
+                alert(`Chargement de la vidéo: ${videoTitle}`);
+            });
+        });
+
+        // Filtrage des cours
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Dans une application réelle, on filtrerait les cours ici
+                alert(`Filtrage des cours par: ${button.textContent}`);
+            });
+        });
+    </script>
+</body>
+</html>
